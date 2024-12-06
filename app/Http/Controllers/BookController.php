@@ -34,4 +34,11 @@ class BookController extends Controller
 
         return to_route('books.index')->with('success', 'Book created successfully');
     }
+
+    public function show($id)
+    {
+        $book = Book::find($id);
+
+        return view('books.show', compact('book'));
+    }
 }
