@@ -36,21 +36,17 @@ class BookController extends Controller
         return to_route('books.index')->with('success', 'Book created successfully');
     }
 
-    public function show($id)
+    public function show(Book $book)
     {
-        $book = Book::find($id);
-
         return view('books.show', compact('book'));
     }
 
-    public function edit($id)
+    public function edit(Book $book)
     {
-        $book = Book::find($id);
-
         return view('books.edit', compact('book'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Book $book)
     {
         $validatedData = $request->validate([
             'cover_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
@@ -60,11 +56,9 @@ class BookController extends Controller
             'is_published' => ['required', 'boolean'],
         ]);
 
-        $book = Book::find($id);
-
         if ($request->hasFile('cover_image')) {
             // delete old image
-            Storage::delete($book->cover_image);
+            Storage::delete('public/' . $book->cover_image);
 
             // store new image
             $validatedData['cover_image'] = $request->file('cover_image')->store('images', 'public');
@@ -75,10 +69,8 @@ class BookController extends Controller
         return to_route('books.index')->with('success', 'Book updated successfully');
     }
 
-    public function destroy($id)
+    public function destroy(Book $book)
     {
-        $book = Book::find($id);
-
         // delete image
         Storage::delete('public/' . $book->cover_image);
 
