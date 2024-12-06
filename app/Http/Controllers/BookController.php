@@ -74,4 +74,16 @@ class BookController extends Controller
 
         return to_route('books.index')->with('success', 'Book updated successfully');
     }
+
+    public function destroy($id)
+    {
+        $book = Book::find($id);
+
+        // delete image
+        Storage::delete('public/' . $book->cover_image);
+
+        $book->delete();
+
+        return back()->with('success', 'Book deleted successfully');
+    }
 }
