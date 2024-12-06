@@ -43,8 +43,8 @@
                                         <td class="text-center">
                                             <a href="{{ route('books.show', $book->id) }}"
                                                 class="btn btn-sm btn-dark"><i class="fa fa-eye"></i></a>
-                                            <a href="" class="btn btn-sm btn-primary"><i
-                                                    class="fa fa-pencil-alt"></i></a>
+                                            <a href="{{ route('books.edit', $book->id) }}"
+                                                class="btn btn-sm btn-primary"><i class="fa fa-pencil-alt"></i></a>
 
                                             <form onsubmit="return confirm('Apakah Anda Yakin ?');" action=""
                                                 method="POST">
