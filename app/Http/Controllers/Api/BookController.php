@@ -60,4 +60,14 @@ class BookController extends Controller
 
         return response()->json(['success' => 'Book updated successfully']);
     }
+
+    public function destroy(Book $book)
+    {
+        // delete image
+        Storage::delete('public/' . $book->cover_image);
+
+        $book->delete();
+
+        return response()->json(['success' => 'Book deleted successfully']);
+    }
 }
