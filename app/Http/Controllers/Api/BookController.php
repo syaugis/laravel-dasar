@@ -15,4 +15,20 @@ class BookController extends Controller
 
         return response()->json($books);
     }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'author' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'is_published' => ['required', 'boolean'],
+            'cover_image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+        ]);
+
+        $validatedData['cover_image'] = $request->file('cover_image')->store('images', 'public');
+        Book::create($validatedData);
+
+        return response()->json(['success' => 'Book created successfully']);
+    }
 }
